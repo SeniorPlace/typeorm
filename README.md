@@ -1,3 +1,7 @@
+This fork of TypeORM targets ES2020 in an attempt to support better stack traces for developers.
+
+It is available on NPM as `@seniorplace/typeorm`.
+
 <div align="center">
   <a href="http://typeorm.io/">
     <img src="https://github.com/typeorm/typeorm/raw/master/resources/logo_big.png" width="492" height="228">
