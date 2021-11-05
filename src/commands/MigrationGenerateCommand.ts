@@ -197,7 +197,7 @@ export class MigrationGenerateCommand implements yargs.CommandModule {
     protected static getTemplate(name: string, timestamp: number, upSqls: string[], downSqls: string[]): string {
         const migrationName = `${camelCase(name, true)}${timestamp}`;
 
-        return `import {MigrationInterface, QueryRunner} from "typeorm";
+        return `import {MigrationInterface, QueryRunner} from "@seniorplace/typeorm";
 
 export class ${migrationName} implements MigrationInterface {
     name = '${migrationName}'
@@ -222,7 +222,7 @@ ${downSqls.join(`
     protected static getJavascriptTemplate(name: string, timestamp: number, upSqls: string[], downSqls: string[]): string {
         const migrationName = `${camelCase(name, true)}${timestamp}`;
 
-        return `const { MigrationInterface, QueryRunner } = require("typeorm");
+        return `const { MigrationInterface, QueryRunner } = require("@seniorplace/typeorm");
 
 module.exports = class ${migrationName} {
     name = '${migrationName}'
