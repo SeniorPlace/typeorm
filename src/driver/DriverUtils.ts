@@ -139,6 +139,7 @@ export class DriverUtils {
 
         const newAlias =
             alias.length === 1 ? alias[0] : alias.join(buildOptions.joiner)
+        console.log("==== NEWALIAS ====", newAlias)
         if (
             maxAliasLength &&
             maxAliasLength > 0 &&

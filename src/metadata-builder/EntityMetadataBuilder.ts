@@ -176,11 +176,16 @@ export class EntityMetadataBuilder {
                                 relation.target,
                                 relation.propertyName,
                             )
+                        console.log("EntityMetadataBuilder RELATION", entityMetadata.targetName, relation.propertyName, relation.target);
+                        console.log("EntityMetadataBuilder JOINCOLUMNS", joinColumns);
                         const { foreignKey, columns, uniqueConstraint } =
                             this.relationJoinColumnBuilder.build(
                                 joinColumns,
                                 relation,
                             ) // create a foreign key based on its metadata args
+
+                            // console.log("EntityMetadataBuilder FOREIGNKEY", foreignKey);
+                            console.log("EntityMetadataBuilder COLUMNS", columns.map(c => ({ databasePath: c.databasePath, propertyName: c.propertyName, entityTargetName: c.entityMetadata.targetName })));
                         if (foreignKey) {
                             relation.registerForeignKeys(foreignKey) // push it to the relation and thus register there a join column
                             entityMetadata.foreignKeys.push(foreignKey)

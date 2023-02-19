@@ -91,6 +91,9 @@ export class SelectQueryBuilder<Entity extends ObjectLiteral>
         sql += this.createLockExpression()
         sql = sql.trim()
         if (this.expressionMap.subQuery) sql = "(" + sql + ")"
+
+
+        console.log("====== THE QUERY ======", sql);
         return sql
     }
 
@@ -2008,6 +2011,7 @@ export class SelectQueryBuilder<Entity extends ObjectLiteral>
         mapToProperty?: string,
         isMappingMany?: boolean,
     ): void {
+        console.log("==== JOINING ====", direction, entityOrProperty, aliasName, condition, parameters, mapToProperty, isMappingMany);
         this.setParameters(parameters || {})
 
         const joinAttribute = new JoinAttribute(
@@ -2272,8 +2276,10 @@ export class SelectQueryBuilder<Entity extends ObjectLiteral>
             // if real entity relation is involved
             if (relation.isManyToOne || relation.isOneToOneOwner) {
                 // JOIN `category` `category` ON `category`.`id` = `post`.`categoryId`
+                console.log("======= JOINING MANY TO ONE RELATION ======", relation.propertyName, relation.target)
                 const condition = relation.joinColumns
                     .map((joinColumn) => {
+                        console.log("JOIN CONDITION FOR JOIN COLUMN: ", destinationTableAlias, parentAlias, relation.propertyPath, joinColumn.referencedColumn!.propertyPath)
                         return (
                             destinationTableAlias +
                             "." +
@@ -2287,6 +2293,9 @@ export class SelectQueryBuilder<Entity extends ObjectLiteral>
                         )
                     })
                     .join(" AND ")
+
+
+                console.log("======= BUILT JOIN CONDITION ======", condition);
 
                 return (
                     " " +
@@ -3932,6 +3941,7 @@ export class SelectQueryBuilder<Entity extends ObjectLiteral>
         if (!relations) return
 
         Object.keys(relations).forEach((relationName) => {
+            
             const relationValue = (relations as any)[relationName]
             const propertyPath = embedPrefix
                 ? embedPrefix + "." + relationName
@@ -3959,13 +3969,16 @@ export class SelectQueryBuilder<Entity extends ObjectLiteral>
                     alias,
                     joinAlias,
                 )
+                console.log("===== BUILDING RELATION JOIN =====", relation.propertyName, relation.target, joinAlias)
 
                 if (
                     relationValue === true ||
                     typeof relationValue === "object"
                 ) {
+                    console.log("===== BUILDING RELATION JOIN INVERSE ENTITY METADATA =====", relation.inverseEntityMetadata.tableName, relation.inverseEntityMetadata.targetName, relation.inverseEntityMetadata.name)
                     relation.inverseEntityMetadata.eagerRelations.forEach(
                         (eagerRelation) => {
+                            console.log("======= INVERSE EAGER RELATION ======", eagerRelation.propertyPath);
                             let eagerRelationJoinAlias =
                                 joinAlias +
                                 "_" +
