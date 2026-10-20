@@ -19,6 +19,7 @@
         "pretty": true,
         "strictNullChecks": true,
         "noUnusedLocals": true,
+        "skipLibCheck": true,
         "downlevelIteration": true
     },
     "include": [
